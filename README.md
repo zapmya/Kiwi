@@ -15,10 +15,11 @@ shader languages like GLSL / HLSL. These datatypes are not limited to a certain 
 instead LLVM is used to map these datatypes and instructions to the available implementation on a certain
 CPU. This way SIMD is also used when compiling Kiwi code for mobile devices. 
 
-In the [src folder](https://github.com/zapmya/Kiwi/tree/master/src) is a simple [example](https://github.com/zapmya/Kiwi/blob/master/src/dotProduct.kiwi) which
+In the [PoC folder](https://github.com/zapmya/Kiwi/tree/master/PoC) is a simple
+[example](https://github.com/zapmya/Kiwi/blob/master/PoC/src/dotProduct.kiwi) which
 demonstrates how vector data types are integrated into the KIWI programming language. There is also an
-equivalent [C implementation](https://github.com/zapmya/Kiwi/blob/master/src/dotProduct.c). As a proof
+equivalent [C implementation](https://github.com/zapmya/Kiwi/blob/master/PoC/src/dotProduct.c). As a proof
  of concept the Kiwi code has been compiled for Linux 64bit systems. There are three native executables
- in the [bin folder](https://github.com/zapmya/Kiwi/tree/master/bin). All of them were compiled from the
- identical source code but a different CPU target has been specified. So the [kiwiDots_avx](https://github.com/zapmya/Kiwi/blob/master/bin/kiwiDots_avx)
+ in the [PoC/bin folder](https://github.com/zapmya/Kiwi/tree/master/PoC/bin). All of them were compiled from the
+ identical source code but a different CPU target has been specified. So the [kiwiDots_avx](https://github.com/zapmya/Kiwi/blob/master/PoC/bin/kiwiDots_avx)
  is compiled and optimized for CPUs that support the [AVX](https://de.wikipedia.org/wiki/Advanced_Vector_Extensions) extensions.   
