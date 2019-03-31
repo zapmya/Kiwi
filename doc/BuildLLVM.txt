@@ -1,0 +1,18 @@
+Download and extract current version e.g. into $HOME/LLVM. Create two folders aside the source folder to hold
+the build and install files. Your folder structure should look something like this
+
+    llvm-3.4-build
+    llvm-3.4-install
+    llvm-3.4-src
+
+Enter the build folder and type
+
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/home/gru/LLVM/llvm-3.4-install/ /home/gru/LLVM/llvm-3.4-src/
+    make -j8
+    make install
+
+Troubleshooting
+
+    When doing a debug build (CMAKE_BUILD_TYPE=Release=Debug) then during the linking stage LLVM needs lots of memory.
+    You will need 8GB of ram when running one build thread (=make -j1) and you will also need about 40GB(!) of disk
+    storage during compilation and installation of LLVM.

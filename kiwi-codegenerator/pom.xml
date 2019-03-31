@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>kiwi</artifactId>
+        <groupId>de.goto3d</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <groupId>de.goto3d</groupId>
+    <artifactId>kiwi-codegenerator</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+    <name>kiwi-parser</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+    </properties>
+
+    <repositories>
+    </repositories>
+
+    <dependencies>
+        <!-- kiwi dependencies -->
+        <dependency>
+            <groupId>de.goto3d</groupId>
+            <artifactId>kiwi-ast</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.goto3d</groupId>
+            <artifactId>kiwi-llvm-binding</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+    </build>
+</project>

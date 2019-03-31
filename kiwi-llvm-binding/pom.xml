@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>kiwi</artifactId>
+        <groupId>de.goto3d</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <artifactId>kiwi-llvm-binding</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+    <name>kiwi-llvm-binding</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <os.platform>${os.name}_${os.arch}</os.platform>
+        <filter.llvm.version>7.0.1</filter.llvm.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>mx telecom</id>
+            <url>http://opensource.mxtelecom.com/maven/repo/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.wapmx.native</groupId>
+            <artifactId>mx-native-loader</artifactId>
+            <version>1.8</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+
+        <!-- filter resources -->
+        <resources>
+            <resource>
+                <directory>ant</directory>
+                <filtering>true</filtering>
+                <targetPath>../ant/</targetPath>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+
+        <plugins>
+            <!-- generate JNI bindings -->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <!-- generate bindings -->
+                    <execution>
+                        <id>generate-bindings</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <echo>Generating wrapper for OS Family: ${os.platform}</echo>
+                                <property file="${basedir}/ant/${os.platform}.properties"/>
+                                <property name="maven.basedir" value="${basedir}"/>
+                                <ant antfile="${basedir}/ant/build.xml" target="swig"/>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                    <!-- compile bindings -->
+                    <execution>
+                        <id>compile-bindings</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <echo>Compiling wrapper for OS Family: ${os.platform}</echo>
+                                <property file="${basedir}/ant/${os.platform}.properties"/>
+                                <property name="maven.basedir" value="${basedir}"/>
+                                <ant antfile="${basedir}/ant/build.xml" target="native"/>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- add generated sources path-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${basedir}/target/generated-sources/src/main/java/</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>

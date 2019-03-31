@@ -1,0 +1,72 @@
+
+main() {
+        openWindow(640,480);
+
+        setPixel(10,10);
+
+        updateWindow();
+
+        mandel();
+
+        delay(5000);
+
+        return 0;
+}
+
+mandel() {
+
+    xstart =-2.025;
+    xende  = 0.6;
+
+    ystart =-1.125;
+    yende  = 1.125;
+
+    xzoom  = (xende-xstart) / 640;
+    yzoom  = (yende-ystart) / 480;
+
+    y = 0;
+    while ( y < 480 ) {
+        x = 0;
+        while ( x < 640 ) {
+            f = farbe(xstart + xzoom * x, ystart + yzoom * y);
+            setPixel(x,y, f);
+            x = x + 1;
+        }
+        if ( y == 240 ) {
+            updateWindow();
+        }
+        y = y + 1;
+    }
+    updateWindow();
+}
+
+farbe(x,y) {
+    r = 0.0;
+    i = 0.0;
+    m = 0.0;
+
+    j = 0;
+
+    while ( j < 256 ) {
+        if ( m >= 4 ) {
+            return j;
+        }
+        j = j + 1;
+        m = r * r - i * i;
+        i = 2.0 * r * i + y;
+        r = m + x;
+    }
+    return j;
+}
+
+extern openWindow(width, height);
+
+extern setPixel(x,y, colorIndex);
+
+extern updateWindow();
+
+extern print(x);
+
+extern printChar(x);
+
+extern delay(double);

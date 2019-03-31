@@ -1,0 +1,39 @@
+struct Sepp {
+    int wurzel;
+    int4 wurzel4;
+}
+
+class Test {
+
+    void main() {
+
+        int[] array = new int[4];
+        int[] nativeArray = native 0xC000;
+        nativeArray[7] = 10;
+        array[0] = 0xff;
+        double f5 = 7.0;
+        int huhu = array[1];
+        int4 x = new int4 ( 0,1,2,3 );
+        int4 y = new int4 ( 7,8,9,6 );
+        int4 z = x+y;
+        print4(z);
+        float fib = fib(20);    
+        print(fib);
+
+        int f = x[1];
+
+        x[1] = 7;
+    }
+
+    float fib(int x) {
+        if ( x < 1 ) {
+            return 1;
+        } else {
+            return fib(x-1) + fib(x-2);
+        }
+    }
+
+    extern void print(float x);
+
+    extern void print4(int4 x);
+}

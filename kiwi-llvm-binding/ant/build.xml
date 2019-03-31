@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="freeimage4j" default="native" basedir="..//">
+
+    <record name="/tmp/build.log" loglevel="verbose" action="start" />
+
+    <!-- create directories -->
+    <target name="initdirs">
+        <mkdir dir="${maven.basedir}/target/generated-sources/src/main/java/de/goto3d/kiwi/compiler/llvmbindings/jni/"/>
+        <mkdir dir="${maven.basedir}/target/generated-sources/src/main/c/"/>
+    </target>
+
+    <!-- get LLVM compiler options -->
+    <target name="llvm-config">
+        <!-- get compiler flags -->
+        <exec executable="${llvmConfigCmd}" dir="${maven.basedir}" outputproperty="llvmCppFlags">
+            <arg line="--cppflags"/>
+        </exec>
+        <echo>CPP-Flags: ${llvmCppFlags}</echo>
+        <!-- get linker flags -->
+        <exec executable="${llvmConfigCmd}" dir="${maven.basedir}" outputproperty="llvmLdFlags">
+            <arg line="--ldflags"/>
+        </exec>
+        <echo>LD-Flags:  ${llvmLdFlags}</echo>
+        <!-- get extra libs -->
+        <exec executable="${llvmConfigCmd}" dir="${maven.basedir}" outputproperty="llvmLdLibs">
+            <arg line="--libs core"/>
+        </exec>
+        <echo>LD-Libs:   ${llvmLdLibs}</echo>
+    </target>
+
+    <!-- generate wrapper -->
+    <target name="swig" depends="initdirs, llvm-config">
+        <exec executable="${swigCmd}" dir="${maven.basedir}">
+            <arg line="-java
+			 		   -package de.goto3d.kiwi.compiler.llvmbindings.jni
+			 		   -module LLVMCore
+			 		   -outdir target/generated-sources/src/main/java/de/goto3d/kiwi/compiler/llvmbindings/jni/
+			 		   -o target/generated-sources/src/main/c/libLLVMCore-${llvm.version}_jni_bindings.c
+			 		   src/main/swig/LLVMCore-${llvm.version}.swg"/>
+        </exec>
+    </target>
+
+    <!-- compile wrapper -->
+    <target name="native" depends="swig">
+        <!-- compile source -->
+        <echo>Compiling wrapper...</echo>
+        <exec executable="${cc}" dir="${maven.basedir}">
+            <arg line="${includes} ${ccArgs} ${llvmCppFlags}
+                       target/generated-sources/src/main/c/libLLVMCore-${llvm.version}_jni_bindings.c
+                       -o target/generated-sources/src/main/c/libLLVMCore-${llvm.version}_jni_bindings.o"
+                    />
+        </exec>
+        <!-- link object file -->
+        <echo>Linking wrapper...</echo>
+        <exec executable="${ld}" dir="${maven.basedir}">
+            <arg line="${ldArgs}
+                       target/generated-sources/src/main/c/libLLVMCore-${llvm.version}_jni_bindings.o
+                       ${llvmLdFlags} ${llvmLdLibs} ${libs}
+                       -o target/generated-sources/src/main/c/libLLVMCore-${llvm.version}_jni_bindings.so"
+                    />
+        </exec>
+        <move file="${maven.basedir}/target/generated-sources/src/main/c/libLLVMCore-${llvm.version}_jni_bindings.so"
+              todir="${maven.basedir}/target/classes/META-INF/lib"
+              />
+    </target>
+
+</project>

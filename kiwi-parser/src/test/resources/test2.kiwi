@@ -1,0 +1,12 @@
+class Test {
+
+    void main() {
+
+        int4 x = new int4 ( 0,1,2,3 );
+        int4 y = new int4 ( 7,8,9,6 );
+        int4 z = x+y;
+        print4(z);
+    }
+
+    extern void print4(int4 x);
+}
