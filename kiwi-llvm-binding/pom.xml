@@ -16,7 +16,7 @@
 
     <properties>
         <os.platform>${os.name}_${os.arch}</os.platform>
-        <filter.llvm.version>7.0.1</filter.llvm.version>
+        <filter.llvm.version>8.0.0</filter.llvm.version>
     </properties>
 
     <repositories>
@@ -67,7 +67,7 @@
                                 <echo>Generating wrapper for OS Family: ${os.platform}</echo>
                                 <property file="${basedir}/ant/${os.platform}.properties"/>
                                 <property name="maven.basedir" value="${basedir}"/>
-                                <ant antfile="${basedir}/ant/build.xml" target="swig"/>
+                                <ant antfile="${basedir}/ant/build.xml" target="swig" />
                             </tasks>
                         </configuration>
                     </execution>

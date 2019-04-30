@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="freeimage4j" default="native" basedir="..//">
+<project name="kiwi-llvm-binding" default="native" basedir="../">
 
-    <record name="/tmp/build.log" loglevel="verbose" action="start" />
+    <record name="${java.io.tmpdir}/build.log" action="start" />
 
     <!-- create directories -->
     <target name="initdirs">
@@ -13,20 +13,29 @@
     <!-- get LLVM compiler options -->
     <target name="llvm-config">
         <!-- get compiler flags -->
-        <exec executable="${llvmConfigCmd}" dir="${maven.basedir}" outputproperty="llvmCppFlags">
+        <exec executable="${llvmConfigCmd}" dir="${maven.basedir}" outputproperty="llvmCppFlags" >
             <arg line="--cppflags"/>
+            <env key="PATH" value="${additionalPath}"/>
         </exec>
         <echo>CPP-Flags: ${llvmCppFlags}</echo>
         <!-- get linker flags -->
         <exec executable="${llvmConfigCmd}" dir="${maven.basedir}" outputproperty="llvmLdFlags">
             <arg line="--ldflags"/>
+            <env key="PATH" value="${additionalPath}"/>
         </exec>
         <echo>LD-Flags:  ${llvmLdFlags}</echo>
         <!-- get extra libs -->
         <exec executable="${llvmConfigCmd}" dir="${maven.basedir}" outputproperty="llvmLdLibs">
-            <arg line="--libs core"/>
+            <arg line="--libs native"/>
+            <env key="PATH" value="${additionalPath}"/>
         </exec>
         <echo>LD-Libs:   ${llvmLdLibs}</echo>
+        <!-- get system libs -->
+        <exec executable="${llvmConfigCmd}" dir="${maven.basedir}" outputproperty="llvmSystemLibs">
+            <arg line="--system-libs"/>
+            <env key="PATH" value="${additionalPath}"/>
+        </exec>
+        <echo>LD-System-Libs:   ${llvmSystemLibs}</echo>
     </target>
 
     <!-- generate wrapper -->
@@ -50,17 +59,19 @@
                        target/generated-sources/src/main/c/libLLVMCore-${llvm.version}_jni_bindings.c
                        -o target/generated-sources/src/main/c/libLLVMCore-${llvm.version}_jni_bindings.o"
                     />
+            <env key="PATH" value="${additionalPath}"/>
         </exec>
         <!-- link object file -->
         <echo>Linking wrapper...</echo>
         <exec executable="${ld}" dir="${maven.basedir}">
             <arg line="${ldArgs}
                        target/generated-sources/src/main/c/libLLVMCore-${llvm.version}_jni_bindings.o
-                       ${llvmLdFlags} ${llvmLdLibs} ${libs}
-                       -o target/generated-sources/src/main/c/libLLVMCore-${llvm.version}_jni_bindings.so"
+                       ${llvmLdFlags} ${llvmLdLibs} ${llvmSystemLibs} ${libs}
+                       -o target/generated-sources/src/main/c/${dynLibPrefix}LLVMCore-${llvm.version}_jni_bindings.${dynLibSuffix}"
                     />
+            <env key="PATH" value="${additionalPath}"/>
         </exec>
-        <move file="${maven.basedir}/target/generated-sources/src/main/c/libLLVMCore-${llvm.version}_jni_bindings.so"
+        <move file="${maven.basedir}/target/generated-sources/src/main/c/${dynLibPrefix}LLVMCore-${llvm.version}_jni_bindings.${dynLibSuffix}"
               todir="${maven.basedir}/target/classes/META-INF/lib"
               />
     </target>
