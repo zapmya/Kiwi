@@ -15,25 +15,21 @@
         <!-- get compiler flags -->
         <exec executable="${llvmConfigCmd}" dir="${maven.basedir}" outputproperty="llvmCppFlags" >
             <arg line="--cppflags"/>
-            <env key="PATH" value="${additionalPath}"/>
         </exec>
         <echo>CPP-Flags: ${llvmCppFlags}</echo>
         <!-- get linker flags -->
         <exec executable="${llvmConfigCmd}" dir="${maven.basedir}" outputproperty="llvmLdFlags">
             <arg line="--ldflags"/>
-            <env key="PATH" value="${additionalPath}"/>
         </exec>
         <echo>LD-Flags:  ${llvmLdFlags}</echo>
         <!-- get extra libs -->
         <exec executable="${llvmConfigCmd}" dir="${maven.basedir}" outputproperty="llvmLdLibs">
             <arg line="--libs native"/>
-            <env key="PATH" value="${additionalPath}"/>
         </exec>
         <echo>LD-Libs:   ${llvmLdLibs}</echo>
         <!-- get system libs -->
         <exec executable="${llvmConfigCmd}" dir="${maven.basedir}" outputproperty="llvmSystemLibs">
             <arg line="--system-libs"/>
-            <env key="PATH" value="${additionalPath}"/>
         </exec>
         <echo>LD-System-Libs:   ${llvmSystemLibs}</echo>
     </target>
@@ -59,7 +55,6 @@
                        target/generated-sources/src/main/c/libLLVMCore-${llvm.version}_jni_bindings.c
                        -o target/generated-sources/src/main/c/libLLVMCore-${llvm.version}_jni_bindings.o"
                     />
-            <env key="PATH" value="${additionalPath}"/>
         </exec>
         <!-- link object file -->
         <echo>Linking wrapper...</echo>
@@ -69,7 +64,6 @@
                        ${llvmLdFlags} ${llvmLdLibs} ${llvmSystemLibs} ${libs}
                        -o target/generated-sources/src/main/c/${dynLibPrefix}LLVMCore-${llvm.version}_jni_bindings.${dynLibSuffix}"
                     />
-            <env key="PATH" value="${additionalPath}"/>
         </exec>
         <move file="${maven.basedir}/target/generated-sources/src/main/c/${dynLibPrefix}LLVMCore-${llvm.version}_jni_bindings.${dynLibSuffix}"
               todir="${maven.basedir}/target/classes/META-INF/lib"
