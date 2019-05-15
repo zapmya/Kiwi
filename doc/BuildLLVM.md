@@ -1,3 +1,9 @@
+Prerequisites
+-------------
+
+Cmake is needed in order to build LLVM (see http://www.llvm.org/docs/CMake.html). So 
+[download](https://cmake.org/download/) and install CMake. Version 3.4.3 is the minimum required.
+
 Build on Linux
 --------------
 
@@ -46,7 +52,7 @@ Build on Windows(64Bit) using Visual Studio 2017
 ------------------------------------------------
 
 The compilation itself works but afterwards it was not possible to successfully link the JNI bindings against
-this compilation's lib files.
+this compilation's lib files. So the use of the MinGW-x64 compiler is highly recommended!
 
 Troubleshooting
 ---------------
