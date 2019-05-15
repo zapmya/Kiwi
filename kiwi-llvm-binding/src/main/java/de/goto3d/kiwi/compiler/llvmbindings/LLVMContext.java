@@ -5,8 +5,6 @@ import de.goto3d.kiwi.compiler.llvmbindings.jni.LLVMCore;
 import de.goto3d.kiwi.compiler.llvmbindings.jni.SWIGTYPE_p_LLVMContextRef;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,25 +16,8 @@ public class LLVMContext {
 
     static {
         try {
-            // read llvm version number from properties file
-            Properties p = new Properties();
-            InputStream inputStream = null;
-            try {
-                inputStream = LLVMContext.class.getResourceAsStream("/llvm.properties");
-                p.load( inputStream );
-            }
-            catch ( IOException e ) {
-                e.printStackTrace();
-                System.exit(-1);
-            }
-            finally {
-                if ( inputStream != null ) {
-                    inputStream.close();
-                }
-            }
-            String llvmVersion = p.getProperty("llvm.version");
             System.setProperty("java.library.tmpdir", System.getProperty("java.io.tmpdir"));
-            NativeLoader.loadLibrary("LLVMCore-"+llvmVersion+"_jni_bindings");
+            NativeLoader.loadLibrary("LLVMCore_jni_bindings");
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(-1);

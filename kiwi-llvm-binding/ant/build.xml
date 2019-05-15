@@ -12,23 +12,28 @@
 
     <!-- get LLVM compiler options -->
     <target name="llvm-config">
+        <!-- get version -->
+        <exec executable="llvm-config" dir="${maven.basedir}" outputproperty="llvmVersion">
+            <arg line="--version"/>
+        </exec>
+        <echo>LLVM-Version:   ${llvmVersion}</echo>
         <!-- get compiler flags -->
-        <exec executable="${llvmConfigCmd}" dir="${maven.basedir}" outputproperty="llvmCppFlags" >
+        <exec executable="llvm-config" dir="${maven.basedir}" outputproperty="llvmCppFlags" >
             <arg line="--cppflags"/>
         </exec>
         <echo>CPP-Flags: ${llvmCppFlags}</echo>
         <!-- get linker flags -->
-        <exec executable="${llvmConfigCmd}" dir="${maven.basedir}" outputproperty="llvmLdFlags">
+        <exec executable="llvm-config" dir="${maven.basedir}" outputproperty="llvmLdFlags">
             <arg line="--ldflags"/>
         </exec>
         <echo>LD-Flags:  ${llvmLdFlags}</echo>
         <!-- get extra libs -->
-        <exec executable="${llvmConfigCmd}" dir="${maven.basedir}" outputproperty="llvmLdLibs">
+        <exec executable="llvm-config" dir="${maven.basedir}" outputproperty="llvmLdLibs">
             <arg line="--libs native"/>
         </exec>
         <echo>LD-Libs:   ${llvmLdLibs}</echo>
         <!-- get system libs -->
-        <exec executable="${llvmConfigCmd}" dir="${maven.basedir}" outputproperty="llvmSystemLibs">
+        <exec executable="llvm-config" dir="${maven.basedir}" outputproperty="llvmSystemLibs">
             <arg line="--system-libs"/>
         </exec>
         <echo>LD-System-Libs:   ${llvmSystemLibs}</echo>
@@ -36,13 +41,13 @@
 
     <!-- generate wrapper -->
     <target name="swig" depends="initdirs, llvm-config">
-        <exec executable="${swigCmd}" dir="${maven.basedir}">
+        <exec executable="swig" dir="${maven.basedir}">
             <arg line="-java
 			 		   -package de.goto3d.kiwi.compiler.llvmbindings.jni
 			 		   -module LLVMCore
 			 		   -outdir target/generated-sources/src/main/java/de/goto3d/kiwi/compiler/llvmbindings/jni/
-			 		   -o target/generated-sources/src/main/c/libLLVMCore-${llvm.version}_jni_bindings.c
-			 		   src/main/swig/LLVMCore-${llvm.version}.swg"/>
+			 		   -o target/generated-sources/src/main/c/libLLVMCore_jni_bindings.c
+			 		   src/main/swig/LLVMCore-${llvmVersion}.swg"/>
         </exec>
     </target>
 
@@ -52,20 +57,25 @@
         <echo>Compiling wrapper...</echo>
         <exec executable="${cc}" dir="${maven.basedir}">
             <arg line="${includes} ${ccArgs} ${llvmCppFlags}
-                       target/generated-sources/src/main/c/libLLVMCore-${llvm.version}_jni_bindings.c
-                       -o target/generated-sources/src/main/c/libLLVMCore-${llvm.version}_jni_bindings.o"
+                       target/generated-sources/src/main/c/libLLVMCore_jni_bindings.c
+                       -o target/generated-sources/src/main/c/libLLVMCore_jni_bindings.o"
                     />
         </exec>
         <!-- link object file -->
         <echo>Linking wrapper...</echo>
         <exec executable="${ld}" dir="${maven.basedir}">
             <arg line="${ldArgs}
-                       target/generated-sources/src/main/c/libLLVMCore-${llvm.version}_jni_bindings.o
-                       ${llvmLdFlags} ${llvmLdLibs} ${llvmSystemLibs} ${libs}
-                       -o target/generated-sources/src/main/c/${dynLibPrefix}LLVMCore-${llvm.version}_jni_bindings.${dynLibSuffix}"
+                       target/generated-sources/src/main/c/libLLVMCore_jni_bindings.o
+                       ${llvmLdFlags} ${llvmLdLibs} ${ldLinkStatic} ${llvmSystemLibs}
+                       -o target/generated-sources/src/main/c/${dynLibPrefix}LLVMCore_jni_bindings.${dynLibSuffix}"
                     />
         </exec>
-        <move file="${maven.basedir}/target/generated-sources/src/main/c/${dynLibPrefix}LLVMCore-${llvm.version}_jni_bindings.${dynLibSuffix}"
+        <!-- strip shared object -->
+        <echo>Stripping symbols...</echo>
+        <exec executable="strip" dir="${maven.basedir}">
+            <arg line="-s target/generated-sources/src/main/c/${dynLibPrefix}LLVMCore_jni_bindings.${dynLibSuffix}"/>
+        </exec>
+        <move file="${maven.basedir}/target/generated-sources/src/main/c/${dynLibPrefix}LLVMCore_jni_bindings.${dynLibSuffix}"
               todir="${maven.basedir}/target/classes/META-INF/lib"
               />
     </target>
