@@ -45,7 +45,7 @@ public class TypeConverter {
         }
 
         // get target type
-        if ( type0.getClass() != PrimitiveType.class || type1.getClass() != PrimitiveType.class ) {
+        if ( !(type0 instanceof PrimitiveType) || !(type1 instanceof PrimitiveType) ) {
             throw new IllegalArgumentException("currently only primitive types are supported");
         }
         PrimitiveType primitiveType0= (PrimitiveType)type0;

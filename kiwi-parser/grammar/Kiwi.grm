@@ -127,16 +127,15 @@ VectorType = ('boolean'|'byte'|'short'|'int'|'long'|'char'|'float'|'double')({No
 
 <IndexAccess> ::= Identifier <DimExprs>
 
-<RelExpression> ::= <Expression> '==' <Expression>
-                  | <Expression> '!=' <Expression>
-                  | <Expression> '>' <Expression>
-                  | <Expression> '>=' <Expression>
-                  | <Expression> '<' <Expression>
-                  | <Expression> '<=' <Expression>
+<Expression> ::= <RelExpression>
 
-<Expression> ::= <Add Exp>
-
-<CallExp>    ::= Identifier '(' <ExpressionList> ')'
+<RelExpression> ::= <RelExpression> '==' <Add Exp>
+                  | <RelExpression> '!=' <Add Exp>
+                  | <RelExpression> '>' <Add Exp>
+                  | <RelExpression> '>=' <Add Exp>
+                  | <RelExpression> '<' <Add Exp>
+                  | <RelExpression> '<=' <Add Exp>
+                  | <Add Exp>
 
 <Add Exp> ::= <Add Exp> '+' <Mult Exp>
                | <Add Exp> '-' <Mult Exp>
@@ -150,6 +149,8 @@ VectorType = ('boolean'|'byte'|'short'|'int'|'long'|'char'|'float'|'double')({No
 
 <Negate Exp> ::= '-' <Value> 
                | <Value> 
+
+<CallExp>    ::= Identifier '(' <ExpressionList> ')'
 
 <Number> ::= HexIntegerLiteral
            | FloatingPointLiteral

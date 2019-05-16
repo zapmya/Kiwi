@@ -4,6 +4,7 @@ import com.creativewidgetworks.goldparser.engine.Reduction;
 import com.creativewidgetworks.goldparser.parser.GOLDParser;
 import com.creativewidgetworks.goldparser.parser.ProcessRule;
 import de.goto3d.kiwi.compiler.ast.BlockNode;
+import de.goto3d.kiwi.compiler.ast.expressions.ExpressionNode;
 import de.goto3d.kiwi.compiler.ast.expressions.RelationExpressionNode;
 import de.goto3d.kiwi.compiler.ast.statements.IfElseStatementNode;
 import de.goto3d.kiwi.compiler.parser.ReductionBase;
@@ -29,7 +30,7 @@ public class IfElseStatementParser extends ReductionBase {
 
         this.astNode = new IfElseStatementNode(
                 this.convertPosition(parser),
-                (RelationExpressionNode)relExpressionParser.getAstNode(),
+                (ExpressionNode)relExpressionParser.getAstNode(),
                 (BlockNode)ifBlockParser.getAstNode(),
                 (BlockNode)elseBlockParser.getAstNode()
         );

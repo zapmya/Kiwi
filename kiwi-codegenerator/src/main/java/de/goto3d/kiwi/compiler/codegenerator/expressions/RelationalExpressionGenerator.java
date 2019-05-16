@@ -29,7 +29,7 @@ public class RelationalExpressionGenerator  extends CodeGeneratorBase<RelationEx
 
         ExpressionNode leftHandExpression   = relationExpressionNode.getLeftHandExpression();
         Type sourceType                     = leftHandExpression.getType();
-        if ( sourceType.getClass() != PrimitiveType.class ) {
+        if ( !(sourceType instanceof PrimitiveType) ) {
             throw new UnsupportedOperationException("Currently only primitive types are supported");
         }
         PrimitiveType primitiveType         = (PrimitiveType)sourceType;

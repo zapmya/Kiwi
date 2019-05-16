@@ -15,12 +15,12 @@ import de.goto3d.kiwi.compiler.parser.ReductionBase;
  * Time: 06:37
  */
 @ProcessRule(rule={
-        "<RelExpression> ::= <Expression> < <Expression>",
-        "<RelExpression> ::= <Expression> > <Expression>",
-        "<RelExpression> ::= <Expression> == <Expression>",
-        "<RelExpression> ::= <Expression> != <Expression>",
-        "<RelExpression> ::= <Expression> <= <Expression>",
-        "<RelExpression> ::= <Expression> >= <Expression>"
+        "<RelExpression> ::= <RelExpression> < <Add Exp>",
+        "<RelExpression> ::= <RelExpression> > <Add Exp>",
+        "<RelExpression> ::= <RelExpression> == <Add Exp>",
+        "<RelExpression> ::= <RelExpression> != <Add Exp>",
+        "<RelExpression> ::= <RelExpression> <= <Add Exp>",
+        "<RelExpression> ::= <RelExpression> >= <Add Exp>"
 })
 
 public class RelationalExpressionParser extends ReductionBase {

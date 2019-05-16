@@ -4,6 +4,8 @@ import de.goto3d.kiwi.compiler.ast.SourcePosition;
 import de.goto3d.kiwi.compiler.ast.Visitor;
 import de.goto3d.kiwi.compiler.ast.types.PrimitiveType;
 import de.goto3d.kiwi.compiler.ast.types.RawType;
+import de.goto3d.kiwi.compiler.ast.types.Type;
+import de.goto3d.kiwi.compiler.ast.types.VectorType;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,7 +24,6 @@ public class RelationExpressionNode extends ExpressionNode {
             ExpressionNode leftHandExpression, ExpressionNode rightHandExpression
     ) {
         super(sourcePosition);
-        this.type = new PrimitiveType(RawType.BOOLEAN);
         this.relation = relation;
         this.leftHandExpression = leftHandExpression;
         this.rightHandExpression = rightHandExpression;

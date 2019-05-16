@@ -6,9 +6,11 @@ import de.goto3d.kiwi.compiler.ast.AstNode;
 import de.goto3d.kiwi.compiler.ast.SourcePosition;
 import de.goto3d.kiwi.compiler.ast.expressions.CallNode;
 import de.goto3d.kiwi.compiler.ast.expressions.DeclarationNode;
+import de.goto3d.kiwi.compiler.ast.expressions.ExpressionNode;
 import de.goto3d.kiwi.compiler.ast.expressions.IdentifierNode;
 import de.goto3d.kiwi.compiler.ast.functions.ExternalFunctionNode;
 import de.goto3d.kiwi.compiler.ast.functions.InternalFunctionNode;
+import de.goto3d.kiwi.compiler.ast.statements.IfStatementNode;
 import de.goto3d.kiwi.compiler.ast.types.*;
 import de.goto3d.kiwi.compiler.ast.visitors.TraversingVisitor;
 
@@ -146,6 +148,27 @@ public class ValidationVisitor extends TraversingVisitor<AstNode> {
         }
 
         return typeConversionNode;
+    }
+
+    @Override
+    public AstNode visit(IfStatementNode ifStatementNode) {
+        // traverse child nodes
+        ExpressionNode expressionNode = ifStatementNode.getExpressionNode();
+        expressionNode.accept(this);
+        ifStatementNode.getBlockNode().accept(this);
+
+        Type type = expressionNode.getType();
+        if ( type.getClass() != PrimitiveType.class || type.getRawType() != RawType.BOOLEAN ) {
+            this.appendError(
+                    ifStatementNode,
+                    String.format(
+                            "boolean type expected but got \"%s\" instead.",
+                            type.getName()
+                    )
+            );
+        }
+
+        return ifStatementNode;
     }
 
     private void appendError(AstNode astNode, String message) {

@@ -58,6 +58,8 @@ public class TypeGenerator {
                 return LLVMRealTypes.floatType();
             case DOUBLE:
                 return LLVMRealTypes.doubleType();
+            case BOOLEAN:
+                return LLVMIntTypes.int1Type();
             case BYTE:
                 return LLVMIntTypes.int8Type();
             case SHORT:

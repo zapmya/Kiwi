@@ -3,7 +3,7 @@ package de.goto3d.kiwi.compiler.ast.statements;
 import de.goto3d.kiwi.compiler.ast.BlockNode;
 import de.goto3d.kiwi.compiler.ast.SourcePosition;
 import de.goto3d.kiwi.compiler.ast.Visitor;
-import de.goto3d.kiwi.compiler.ast.expressions.RelationExpressionNode;
+import de.goto3d.kiwi.compiler.ast.expressions.ExpressionNode;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,14 +11,14 @@ import de.goto3d.kiwi.compiler.ast.expressions.RelationExpressionNode;
  * Date: 12.01.13
  * Time: 21:09
  */
-public class IfStatementNode extends SimpleStatementNode<RelationExpressionNode> {
+public class IfStatementNode extends SimpleStatementNode<ExpressionNode> {
 
     private final BlockNode blockNode;
 
     public IfStatementNode(
-            SourcePosition sourcePosition, RelationExpressionNode relationExpressionNode, BlockNode blockNode
+            SourcePosition sourcePosition, ExpressionNode expressionNode, BlockNode blockNode
     ) {
-        super(sourcePosition,relationExpressionNode);
+        super(sourcePosition,expressionNode);
         this.blockNode  = blockNode;
     }
 

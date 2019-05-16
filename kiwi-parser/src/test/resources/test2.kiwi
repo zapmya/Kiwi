@@ -4,8 +4,15 @@ class Test {
 
         int4 x = new int4 ( 0,1,2,3 );
         int4 y = new int4 ( 7,8,9,6 );
-        int4 z = x+y;
-        print4(z);
+
+        // START: add proper validation for this case
+        //boolean4 cmp0 = x < y[0];
+        // END: add proper validation for this case
+
+        boolean4 cmp = x < y;
+        if ( cmp[0] ) {
+            print4(x);
+        }
     }
 
     extern void print4(int4 x);

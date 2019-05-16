@@ -25,7 +25,7 @@ public class TestParser {
 
         KiwiParser parser = new KiwiParser();
         AstNode rootNode = parser.parse(
-                new BufferedReader(new InputStreamReader(TestParser.class.getResourceAsStream("/dotProduct.kiwi")))
+                new BufferedReader(new InputStreamReader(TestParser.class.getResourceAsStream("/test2.kiwi")))
         );
 
         // generate symbol table
