@@ -27,6 +27,10 @@ Identifier    = {Letter}{AlphaNumeric}*
 PrimitiveType = 'boolean'|'byte'|'short'|'int'|'long'|'char'|'float'|'double'|'void'
 VectorType = ('boolean'|'byte'|'short'|'int'|'long'|'char'|'float'|'double')({NoZeroDigit}{Digit}?)
 
+Comment Start = '/*'
+Comment End = '*/'
+Comment Line = '//'
+
 !------------------------------------------------------
 
 
