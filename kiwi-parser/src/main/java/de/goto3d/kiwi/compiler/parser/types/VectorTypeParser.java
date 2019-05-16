@@ -6,8 +6,8 @@ import com.creativewidgetworks.goldparser.parser.GOLDParser;
 import com.creativewidgetworks.goldparser.parser.ProcessRule;
 import de.goto3d.kiwi.compiler.ast.SourcePosition;
 import de.goto3d.kiwi.compiler.ast.TypeNode;
+import de.goto3d.kiwi.compiler.ast.types.PrimitiveType;
 import de.goto3d.kiwi.compiler.ast.types.Type;
-import de.goto3d.kiwi.compiler.ast.types.VectorType;
 import de.goto3d.kiwi.compiler.parser.ReductionBase;
 
 /**
@@ -23,7 +23,7 @@ public class VectorTypeParser extends ReductionBase {
         Reduction reduction             = parser.getCurrentReduction();
 
         Token token                     = reduction.get(0);
-        Type type                       = VectorType.getByNameAndDim(token.getData().toString());
+        Type type                       = PrimitiveType.getByNameAndDim(token.getData().toString());
 
         SourcePosition sourcePosition   = this.convertPosition(parser);
         this.astNode                    = new TypeNode(sourcePosition, type);

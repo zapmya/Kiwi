@@ -1,10 +1,7 @@
 package de.goto3d.kiwi.compiler.typeconversion;
 
 import de.goto3d.kiwi.compiler.ast.expressions.ExpressionNode;
-import de.goto3d.kiwi.compiler.ast.types.PrimitiveType;
-import de.goto3d.kiwi.compiler.ast.types.Type;
-import de.goto3d.kiwi.compiler.ast.types.TypeAwareNode;
-import de.goto3d.kiwi.compiler.ast.types.TypeConversionNode;
+import de.goto3d.kiwi.compiler.ast.types.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -51,7 +48,13 @@ public class TypeConverter {
         PrimitiveType primitiveType0= (PrimitiveType)type0;
         PrimitiveType primitiveType1= (PrimitiveType)type1;
 
-        return primitiveType0.getRawType().order > primitiveType1.getRawType().order ? type0 : type1;
+        RawType targetRawType   = primitiveType0.getRawType().order > primitiveType1.getRawType().order ?
+                type0.getRawType() :
+                type1.getRawType();
+        int dimensions          = primitiveType0.getDimensions() > primitiveType1.getDimensions() ?
+                primitiveType0.getDimensions() :
+                primitiveType1.getDimensions();
+        return new PrimitiveType(targetRawType, dimensions);
     }
 
    public ExpressionNode insertConverterNode(ExpressionNode sourceNode, Type targetType) {

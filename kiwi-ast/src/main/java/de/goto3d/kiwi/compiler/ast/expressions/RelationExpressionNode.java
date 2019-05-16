@@ -2,10 +2,6 @@ package de.goto3d.kiwi.compiler.ast.expressions;
 
 import de.goto3d.kiwi.compiler.ast.SourcePosition;
 import de.goto3d.kiwi.compiler.ast.Visitor;
-import de.goto3d.kiwi.compiler.ast.types.PrimitiveType;
-import de.goto3d.kiwi.compiler.ast.types.RawType;
-import de.goto3d.kiwi.compiler.ast.types.Type;
-import de.goto3d.kiwi.compiler.ast.types.VectorType;
 
 /**
  * Created by IntelliJ IDEA.

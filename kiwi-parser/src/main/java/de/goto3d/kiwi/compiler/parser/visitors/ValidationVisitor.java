@@ -116,13 +116,29 @@ public class ValidationVisitor extends TraversingVisitor<AstNode> {
         // check types
         Type sourceType = typeConversionNode.getSourceType();
         Type targetType = typeConversionNode.getType();
+
         // are types equal ?
         if ( !sourceType.equals(targetType) ) {
             // no -> check if conversion is allowed
             // case 1: primitive types
             if ( sourceType instanceof PrimitiveType && targetType instanceof PrimitiveType ) {
+                // are dimensions equal ?
+                if ( ((PrimitiveType)sourceType).getDimensions() != ((PrimitiveType)targetType).getDimensions() ) {
+                    // no -> append error message
+                    this.appendError(
+                            typeConversionNode,
+                            String.format(
+                                    "Cannot convert type \"%s\" to \"%s\"",
+                                    sourceType.getName(),
+                                    targetType.getName()
+                            )
+                    );
+                    return typeConversionNode;
+                }
+
                 // is order ok `
                 if (sourceType.getRawType().order <= targetType.getRawType().order ) {
+                    // yes -> check dimension
                     // yes -> order ok, no problem
                     return typeConversionNode;
                 }
@@ -140,9 +156,9 @@ public class ValidationVisitor extends TraversingVisitor<AstNode> {
             this.appendError(
                     typeConversionNode,
                     String.format(
-                            "Types do not match. left = \"%s\", right = \"%s\"",
-                            targetType.getName(),
-                            sourceType.getName()
+                            "Cannot convert type \"%s\" to \"%s\"",
+                            sourceType.getName(),
+                            targetType.getName()
                     )
             );
         }

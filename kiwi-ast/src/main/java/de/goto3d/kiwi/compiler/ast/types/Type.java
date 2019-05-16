@@ -8,5 +8,7 @@ public interface Type {
     String getName();
 
     RawType getRawType();
+
+    boolean isVectorType();
     //TODO: add method to compare order
 }

@@ -4,11 +4,9 @@ import de.goto3d.kiwi.compiler.SymbolTable;
 import de.goto3d.kiwi.compiler.ast.AstNode;
 import de.goto3d.kiwi.compiler.ast.expressions.*;
 import de.goto3d.kiwi.compiler.ast.functions.ExternalFunctionNode;
-import de.goto3d.kiwi.compiler.ast.statements.IfStatementNode;
 import de.goto3d.kiwi.compiler.ast.types.PrimitiveType;
 import de.goto3d.kiwi.compiler.ast.types.RawType;
 import de.goto3d.kiwi.compiler.ast.types.Type;
-import de.goto3d.kiwi.compiler.ast.types.VectorType;
 import de.goto3d.kiwi.compiler.ast.visitors.TraversingVisitor;
 
 /**
@@ -90,8 +88,8 @@ public class InsertMissingTypesVisitor extends TraversingVisitor<AstNode> {
         relationExpressionNode.getRightHandExpression().accept(this);
 
         Type sourceType = leftHandExpression.getType();
-        Type targetType = sourceType.getClass() == VectorType.class ?
-            new VectorType(RawType.BOOLEAN, ((VectorType)sourceType).getDimensions()) :
+        Type targetType = sourceType instanceof PrimitiveType ?
+            new PrimitiveType(RawType.BOOLEAN, ((PrimitiveType)sourceType).getDimensions()) :
             new PrimitiveType(RawType.BOOLEAN);
         relationExpressionNode.setType(targetType);
 

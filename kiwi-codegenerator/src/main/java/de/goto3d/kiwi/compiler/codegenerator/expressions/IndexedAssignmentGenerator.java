@@ -4,7 +4,6 @@ import de.goto3d.kiwi.compiler.ast.expressions.ExpressionNode;
 import de.goto3d.kiwi.compiler.ast.expressions.IdentifierNode;
 import de.goto3d.kiwi.compiler.ast.expressions.IndexedAssignmentNode;
 import de.goto3d.kiwi.compiler.ast.types.Type;
-import de.goto3d.kiwi.compiler.ast.types.VectorType;
 import de.goto3d.kiwi.compiler.codegenerator.CodeGeneratorBase;
 import de.goto3d.kiwi.compiler.codegenerator.CodeGeneratorVisitor;
 import de.goto3d.kiwi.compiler.codegenerator.VariableStore;
@@ -54,7 +53,7 @@ public class IndexedAssignmentGenerator extends CodeGeneratorBase<IndexedAssignm
         // distinguish array from vector types
         Type type   = identifierNode.getType();
         // is it a vector type ?
-        if ( type instanceof VectorType ) {
+        if ( type.isVectorType() ) {
             // yes -> generate code for element insertion
             // load vector
             LLVMVector vector   = this.visitor.getBuilder().createLoad(varPointer, varName).cast(LLVMVector.class);

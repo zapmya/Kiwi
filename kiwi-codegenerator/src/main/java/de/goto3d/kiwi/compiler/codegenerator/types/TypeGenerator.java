@@ -13,11 +13,12 @@ public class TypeGenerator {
 
     public LLVMBaseType generateCode(Type type) {
 
-        if ( type instanceof VectorType ) {
-            return this.generateVectorTypeCode((VectorType)type);
-        }
         if ( type instanceof PrimitiveType) {
-            return this.generatePrimitiveTypeCode((PrimitiveType) type);
+            PrimitiveType primitiveType = (PrimitiveType) type;
+            if ( primitiveType.isVectorType() ) {
+                return this.generateVectorTypeCode(primitiveType);
+            }
+            return this.generatePrimitiveTypeCode(primitiveType);
         }
         if ( type instanceof PointerType) {
             return this.generatePointerTypeCode((PointerType) type);
@@ -34,9 +35,9 @@ public class TypeGenerator {
         return LLVMPointerType.createPointerType(type);
     }
 
-    private LLVMBaseType generateVectorTypeCode(VectorType vectorType) {
-        LLVMBaseType type   = this.generateRawTypeCode(vectorType.getRawType());
-        return LLVMVectorType.createVectorType(type, vectorType.getDimensions());
+    private LLVMBaseType generateVectorTypeCode(PrimitiveType primitiveType) {
+        LLVMBaseType type   = this.generateRawTypeCode(primitiveType.getRawType());
+        return LLVMVectorType.createVectorType(type, primitiveType.getDimensions());
     }
 
     private LLVMBaseType generateArrayTypeCode(ArrayType arrayType) {

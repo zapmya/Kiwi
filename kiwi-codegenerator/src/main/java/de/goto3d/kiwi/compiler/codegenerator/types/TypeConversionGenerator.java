@@ -102,7 +102,7 @@ public class TypeConversionGenerator extends CodeGeneratorBase<TypeConversionNod
         RawType sourceRawType   = sourceType.getRawType();
         RawType targetRawType   = targetType.getRawType();
         // is source type also an integer number ?
-        if ( sourceRawType.isInteger() ) {
+        if ( sourceRawType.isInteger() || sourceRawType == RawType.BOOLEAN ) {
             // yes -> check if we are increasing the bits
             if ( sourceRawType.bits < targetRawType.bits ) {
                 // yes -> extend bits

@@ -37,6 +37,11 @@ public class ArrayType implements Type {
         return this.type.getRawType();
     }
 
+    @Override
+    public boolean isVectorType() {
+        return false;
+    }
+
     public int getDimensions() {
         return dimensions;
     }

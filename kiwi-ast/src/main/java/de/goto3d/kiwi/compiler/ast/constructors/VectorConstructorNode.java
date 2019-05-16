@@ -4,8 +4,8 @@ import de.goto3d.kiwi.compiler.ast.SourcePosition;
 import de.goto3d.kiwi.compiler.ast.Visitor;
 import de.goto3d.kiwi.compiler.ast.expressions.ExpressionListNode;
 import de.goto3d.kiwi.compiler.ast.expressions.ExpressionNode;
+import de.goto3d.kiwi.compiler.ast.types.PrimitiveType;
 import de.goto3d.kiwi.compiler.ast.types.RawType;
-import de.goto3d.kiwi.compiler.ast.types.VectorType;
 
 /**
  * Created by da gru on 29.12.14.
@@ -19,7 +19,7 @@ public class VectorConstructorNode extends ExpressionNode {
         super(sourcePosition);
         this.expressionListNode = expressionListNode;
         // TODO: determine RawType
-        this.type               = new VectorType(RawType.INT, expressionListNode.size());
+        this.type               = new PrimitiveType(RawType.INT, expressionListNode.size());
     }
 
     @Override
