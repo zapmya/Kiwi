@@ -20,6 +20,11 @@ public class FloatNumberParser extends ReductionBase {
     public FloatNumberParser(GOLDParser parser) {
         Reduction reduction = parser.getCurrentReduction();
         String numberString = reduction.get(0).getData().toString();
-        this.astNode = new NumberNode(this.convertPosition(parser),Double.parseDouble(numberString));
+        // is it a float number ?
+        if ( numberString.endsWith("f") || numberString.endsWith("F") ) {
+            this.astNode = new NumberNode(this.convertPosition(parser),Float.parseFloat(numberString));
+        } else {
+            this.astNode = new NumberNode(this.convertPosition(parser),Double.parseDouble(numberString));
+        }
     }
 }
