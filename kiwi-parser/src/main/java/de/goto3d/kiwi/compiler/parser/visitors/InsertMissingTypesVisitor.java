@@ -35,6 +35,18 @@ public class InsertMissingTypesVisitor extends TraversingVisitor<AstNode> {
     }
 
     @Override
+    public AstNode visit(NegateNode negateNode) {
+
+        // traverse node
+        negateNode.getOperand().accept(this);
+
+        negateNode.setType(negateNode.getOperand().getType());
+
+        // this is a terminal! We cannot step down any further.
+        return negateNode;
+    }
+
+    @Override
     public AstNode visit(CallNode callNode) {
 
         // traverse children

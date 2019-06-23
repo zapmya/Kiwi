@@ -22,6 +22,9 @@ public class LLVMModule {
         LLVMCore.LLVMDumpModule(this.swigtype_p_llvmOpaqueModule);
     }
 
+    public String print() {
+        return LLVMCore.LLVMPrintModuleToString(this.swigtype_p_llvmOpaqueModule);
+    }
     public LLVMFunction getFunction(String functionSignature) {
         return LLVMFunction.getInstance(
                 LLVMCore.LLVMGetNamedFunction(this.swigtype_p_llvmOpaqueModule, functionSignature)

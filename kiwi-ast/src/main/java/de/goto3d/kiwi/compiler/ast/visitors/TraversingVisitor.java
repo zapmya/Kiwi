@@ -32,9 +32,11 @@ public abstract class TraversingVisitor<T extends AstNode> implements Visitor<T>
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T visit(NegateNode negateNode) {
         // traverse node
-        return negateNode.getOperand().accept(this);
+        negateNode.getOperand().accept(this);
+        return (T) negateNode;
     }
 
     @Override
@@ -327,6 +329,7 @@ public abstract class TraversingVisitor<T extends AstNode> implements Visitor<T>
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T visit(CompilationItemsNode compilationItemsNode) {
         for (AstNode astNode : compilationItemsNode.getItems()) {
             astNode.accept(this);

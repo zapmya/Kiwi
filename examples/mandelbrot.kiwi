@@ -1,0 +1,58 @@
+class Mandelbrot {
+
+    int main() {
+        mandel();
+
+        return 0;
+    }
+
+    void mandel() {
+
+        // TODO: add support for floats
+        double xstart =-2.5;
+        double xende  = 1.5;
+
+        double ystart =-1.5;
+        double yende  = 1.5;
+
+        double xzoom  = (xende-xstart) / 60;
+        double yzoom  = (yende-ystart) / 25;
+
+        int y = 0;
+        while ( y < 25 ) {
+            int x = 0;
+            while ( x < 60 ) {
+                int f = farbe(xstart + xzoom * x, ystart + yzoom * y);
+                print(33+f);
+                //setPixel(x,y, f);
+                x = x + 1;
+            }
+            y = y + 1;
+            printLine();
+        }
+    }
+
+    int farbe(double x, double y) {
+        double r = 0;
+        double i = 0;
+        double m = 0;
+
+        int j = 0;
+        while ( j < 90 ) {
+            if ( m >= 4 ) {
+                return j;
+            }
+            j = j + 1;
+            m = r * r - i * i;
+            i = 2 * r * i + y;
+            r = m + x;
+        }
+        return j;
+    }
+
+    extern void print(int x);
+
+    extern void printDouble(double x);
+
+    extern void printLine();
+}

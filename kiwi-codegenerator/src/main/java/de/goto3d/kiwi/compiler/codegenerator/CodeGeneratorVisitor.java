@@ -140,6 +140,11 @@ public class CodeGeneratorVisitor implements Visitor<LLVMValue> {
         this.module.dump();
     }
 
+    public String print() {
+        // TODO: RUNTIME_MODULE auslagern in eigene Klasse(n)
+        return PrototypeGenerator.RUNTIME_MODULE.print() + this.module.print();
+    }
+
     public VariableStore getCurrentVariableStore() {
         return this.currentVariableStore;
     }
