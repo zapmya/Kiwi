@@ -12,7 +12,7 @@ import java.util.List;
  */
 public abstract class ListNode<T> extends AstNode {
 
-    private final List<T> items    = new ArrayList<T>();
+    private final List<T> items    = new ArrayList<>();
 
     protected ListNode(SourcePosition sourcePosition) {
         super(sourcePosition);

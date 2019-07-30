@@ -26,4 +26,9 @@ public class IdentifierNode extends ExpressionNode {
     public String getIdentifier() {
         return identifier;
     }
+
+    @Override
+    public boolean isConstant() {
+        return false;
+    }
 }

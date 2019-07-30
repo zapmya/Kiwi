@@ -89,7 +89,8 @@ public class CodeGeneratorVisitor implements Visitor<LLVMValue> {
 
     private TypeConversionGenerator typeConversionGenerator = new TypeConversionGenerator(this);
 
-    private VectorConstructorGenerator vectorConstructorGenerator = new VectorConstructorGenerator(this);
+    private VectorConstructorGenerator vectorConstructorGenerator =
+            new VectorConstructorGenerator(this, this.typeGenerator);
 
     private ArrayConstructorGenerator arrayConstructorGenerator = new ArrayConstructorGenerator(
             this, this.prototypeGenerator, this.typeGenerator

@@ -41,4 +41,9 @@ public class TypeConversionNode extends ExpressionNode {
     public boolean isImplicitCast() {
         return implicitCast;
     }
+
+    @Override
+    public boolean isConstant() {
+        return expressionNode.isConstant();
+    }
 }

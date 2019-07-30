@@ -36,4 +36,9 @@ public class CallNode extends ExpressionNode {
     public ExpressionListNode getExpressionListNode() {
         return expressionListNode;
     }
+
+    @Override
+    public boolean isConstant() {
+        return false;
+    }
 }

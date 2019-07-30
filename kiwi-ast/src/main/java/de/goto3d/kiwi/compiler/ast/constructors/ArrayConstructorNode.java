@@ -28,4 +28,9 @@ public class ArrayConstructorNode extends ExpressionNode {
     public DimExpressionsNode getDimExpressionsNode() {
         return dimExpressionsNode;
     }
+
+    @Override
+    public boolean isConstant() {
+        return false;
+    }
 }

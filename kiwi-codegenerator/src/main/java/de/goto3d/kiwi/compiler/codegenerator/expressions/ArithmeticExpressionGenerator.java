@@ -48,7 +48,7 @@ public class ArithmeticExpressionGenerator extends CodeGeneratorBase<OperationNo
         }
         PrimitiveType primitiveTargetType   = (PrimitiveType)targetType;
 
-        switch(((PrimitiveType) targetType).getRawType()) {
+        switch(targetType.getRawType()) {
             case BYTE:
             case SHORT:
             case INT:

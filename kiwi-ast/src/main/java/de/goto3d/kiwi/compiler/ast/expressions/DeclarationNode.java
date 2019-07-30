@@ -33,4 +33,9 @@ public class DeclarationNode extends ExpressionNode implements DeclarationAwareN
     public DeclarationNode getDeclarationNode() {
         return this;
     }
+
+    @Override
+    public boolean isConstant() {
+        return false;
+    }
 }

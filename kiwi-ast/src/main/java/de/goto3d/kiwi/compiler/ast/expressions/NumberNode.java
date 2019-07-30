@@ -43,4 +43,9 @@ public class NumberNode extends ExpressionNode {
     public Number getValue() {
         return value;
     }
+
+    @Override
+    public boolean isConstant() {
+        return true;
+    }
 }

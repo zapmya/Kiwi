@@ -25,6 +25,11 @@ public class PrecedenceNode extends ExpressionNode {
     }
 
     @Override
+    public boolean isConstant() {
+        return this.expressionNode.isConstant();
+    }
+
+    @Override
     public <T> T accept(Visitor<T> visitor) {
         return visitor.visit(this);
     }

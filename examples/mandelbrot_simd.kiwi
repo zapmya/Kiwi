@@ -1,0 +1,86 @@
+class Mandelbrot {
+
+    int main() {
+        mandel();
+
+        return 0;
+    }
+
+    void mandel() {
+
+        float4 xmin     = new float4(-2.5f,-2.5f,-2.5f,-2.5f);
+        float4 ymin     = new float4(-1.5f,-1.5f,-1.5f,-1.5f);
+
+        float4 xscale   = new float4((1.5f+2.5f) / 60,(1.5f+2.5f) / 60,(1.5f+2.5f) / 60,(1.5f+2.5f) / 60);
+        float4 yscale   = new float4((1.5f+1.5f) / 25,(1.5f+1.5f) / 25,(1.5f+1.5f) / 25,(1.5f+1.5f) / 25);
+
+        float4 threshold    = new float4(4,4,4,4);
+        int y = 0;
+        while ( y < 25 ) {
+            int x = 0;
+            while ( x < 60 ) {
+                int4 mx     = new int4(x+0,x+1,x+2,x+3);
+
+                int4 my     = new int4(0,0,0,0);
+                my[0]       = y;
+                my[1]       = y;
+                my[2]       = y;
+                my[3]       = y;
+
+                float4 cr   = mx*xscale + xmin;
+                float4 ci   = my*yscale + ymin;
+                float4 zr   = cr;
+                float4 zi   = ci;
+
+                int k       = 1;
+                int4 mk     = new int4(1,1,1,1);
+                while ( k < 90 ) {
+                    k   = k+1;
+                    /* Compute z1 from z0 */
+                    float4 zr2  = zr*zr;
+                    float4 zi2  = zi*zi;
+                    float4 zrzi = zr*zi;
+                    /* zr1 = zr0 * zr0 - zi0 * zi0 + cr */
+                    /* zi1 = zr0 * zi0 + zr0 * zi0 + ci */
+                    zr  = zr2 - zi2 + cr;
+                    zi  = zrzi + zrzi + ci;
+
+                    // Increment k
+                    zr2 = zr*zr;
+                    zi2 = zi*zi;
+                    float4 mag2 = zr2 + zi2;
+                    int4 mask   = mag2 < threshold;
+                    mk          = mk + mask;
+
+                    // TODO: simplify this -> do one compare only
+                    if ( mask[0] == 0 ) {
+                        if ( mask[1] == 0 ) {
+                            if ( mask[2] == 0 ) {
+                                if ( mask[3] == 0 ) {
+                                    // TODO: add support for break statement
+                                    k = 100;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                print(33+mk[0]);
+                print(33+mk[1]);
+                print(33+mk[2]);
+                print(33+mk[3]);
+
+                x = x + 4;
+            }
+            y = y + 1;
+            printLine();
+        }
+    }
+
+
+    extern void print(int x);
+
+    extern void printDouble(double x);
+
+    extern void printLine();
+}

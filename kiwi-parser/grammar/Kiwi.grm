@@ -84,6 +84,11 @@ Comment Line = '//'
                | <DoWhileStatement>
                | <ReturnStatement>
                | <DeclarationStatement>
+               | <BreakStatement>
+               | <ContinueStatement>
+
+<BreakStatement> ::= 'break' ';'
+<ContinueStatement> ::= 'continue' ';'
 
 <FlatType> ::= PrimitiveType
              | VectorType

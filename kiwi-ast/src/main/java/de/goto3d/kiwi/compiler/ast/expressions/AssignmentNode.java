@@ -38,4 +38,9 @@ public class AssignmentNode extends ExpressionNode {
     public void setExpressionNode(ExpressionNode expressionNode) {
         this.expressionNode = expressionNode;
     }
+
+    @Override
+    public boolean isConstant() {
+        return false;
+    }
 }

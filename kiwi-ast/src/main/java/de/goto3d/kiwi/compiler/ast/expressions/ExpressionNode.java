@@ -28,4 +28,6 @@ public abstract class ExpressionNode extends AstNode implements TypeAwareNode {
     public void setType(Type type) {
         this.type = type;
     }
+
+    public abstract boolean isConstant();
 }

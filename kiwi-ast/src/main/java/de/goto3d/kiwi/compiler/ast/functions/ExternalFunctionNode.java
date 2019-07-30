@@ -47,4 +47,9 @@ public class ExternalFunctionNode extends ExpressionNode {
     public String getSignature() {
         return this.declarationNode.getIdentifierNode().getIdentifier();
     }
+
+    @Override
+    public boolean isConstant() {
+        return false;
+    }
 }

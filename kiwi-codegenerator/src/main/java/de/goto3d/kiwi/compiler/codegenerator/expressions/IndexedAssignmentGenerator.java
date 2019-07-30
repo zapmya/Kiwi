@@ -58,7 +58,9 @@ public class IndexedAssignmentGenerator extends CodeGeneratorBase<IndexedAssignm
             // load vector
             LLVMVector vector   = this.visitor.getBuilder().createLoad(varPointer, varName).cast(LLVMVector.class);
             // and insert element
-            return this.visitor.getBuilder().createInsertElement(vector, expressionValue, indexValues[0], "elem");
+            LLVMValue newVector = this.visitor.getBuilder().createInsertElement(vector, expressionValue, indexValues[0], "elem");
+
+            return this.visitor.getBuilder().createStore(newVector, varPointer);
         }
 
         // no -> it has to be an array type

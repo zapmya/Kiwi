@@ -30,4 +30,9 @@ public class NativeArrayConstructorNode extends ExpressionNode {
     public NumberNode getAddress() {
         return address;
     }
+
+    @Override
+    public boolean isConstant() {
+        return false;
+    }
 }

@@ -1,0 +1,12 @@
+class Bug {
+
+    int main() {
+        int x       = 0;
+        int4 mx     = new int4(x+3,x+2,x+1,x+0);
+        //int4 mx     = new int4(3,2+(3-2*4),1,0);
+
+        //float4 fmx  = new float4(3,2+(3-2*4),1,0);
+
+        return 0;
+    }
+}

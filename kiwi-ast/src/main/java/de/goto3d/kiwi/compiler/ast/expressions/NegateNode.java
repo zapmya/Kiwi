@@ -26,4 +26,9 @@ public class NegateNode extends ExpressionNode {
     public ExpressionNode getOperand() {
         return operand;
     }
+
+    @Override
+    public boolean isConstant() {
+        return this.operand.isConstant();
+    }
 }

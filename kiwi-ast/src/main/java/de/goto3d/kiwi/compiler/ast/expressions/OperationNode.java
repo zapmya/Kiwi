@@ -48,4 +48,9 @@ public class OperationNode extends ExpressionNode {
     public void setRightHandExpression(ExpressionNode rightHandExpression) {
         this.rightHandExpression= rightHandExpression;
     }
+
+    @Override
+    public boolean isConstant() {
+        return this.leftHandExpression.isConstant() && this.rightHandExpression.isConstant();
+    }
 }

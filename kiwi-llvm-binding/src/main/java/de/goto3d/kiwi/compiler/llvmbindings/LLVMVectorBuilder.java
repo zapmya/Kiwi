@@ -25,8 +25,8 @@ public abstract class LLVMVectorBuilder extends LLVMBitwiseBinaryBuilder {
         );
     }
 
-    public LLVMValue createInsertElement(LLVMVector vector, LLVMValue element, LLVMValue index, String name) {
-        return new LLVMValue(
+    public LLVMVector createInsertElement(LLVMVector vector, LLVMValue element, LLVMValue index, String name) {
+        return LLVMVector.getInstance(
                   LLVMCore.LLVMBuildInsertElement(
                             this.swigtype_p_llvmOpaqueBuilder,
                             vector.swigtype_p_llvmOpaqueValue,

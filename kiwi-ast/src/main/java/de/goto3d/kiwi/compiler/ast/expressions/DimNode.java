@@ -24,4 +24,9 @@ public class DimNode extends ExpressionNode {
     public int getDimensions() {
         return dimensions;
     }
+
+    @Override
+    public boolean isConstant() {
+        return false;
+    }
 }

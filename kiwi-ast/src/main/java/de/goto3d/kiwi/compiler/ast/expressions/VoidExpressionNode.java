@@ -20,6 +20,11 @@ public class VoidExpressionNode extends ExpressionNode {
     }
 
     @Override
+    public boolean isConstant() {
+        return false;
+    }
+
+    @Override
     public <T> T accept(Visitor<T> visitor) {
         return visitor.visit(this);
     }
