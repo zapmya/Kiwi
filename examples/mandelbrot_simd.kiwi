@@ -21,11 +21,7 @@ class Mandelbrot {
             while ( x < 60 ) {
                 int4 mx     = new int4(x+0,x+1,x+2,x+3);
 
-                int4 my     = new int4(0,0,0,0);
-                my[0]       = y;
-                my[1]       = y;
-                my[2]       = y;
-                my[3]       = y;
+                int4 my     = new int4(y,y,y,y);
 
                 float4 cr   = mx*xscale + xmin;
                 float4 ci   = my*yscale + ymin;

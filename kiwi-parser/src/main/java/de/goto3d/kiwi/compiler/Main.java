@@ -1,8 +1,6 @@
 package de.goto3d.kiwi.compiler;
 
 import de.goto3d.kiwi.compiler.ast.AstNode;
-import de.goto3d.kiwi.compiler.ast.Visitor;
-import de.goto3d.kiwi.compiler.ast.visitors.SerializeVisitor;
 import de.goto3d.kiwi.compiler.codegenerator.CodeGeneratorVisitor;
 import de.goto3d.kiwi.compiler.parser.KiwiParser;
 import de.goto3d.kiwi.compiler.parser.visitors.DeclarationVisitor;
