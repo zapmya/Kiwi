@@ -202,6 +202,12 @@ public abstract class TraversingVisitor<T extends AstNode> implements Visitor<T>
 
     @Override
     @SuppressWarnings("unchecked")
+    public T visit(ContinueStatementNode continueStatementNode) {
+        return (T) continueStatementNode;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public T visit(ExpressionListNode expressionListNode) {
         // traverse child nodes
         for (ExpressionNode expressionNode : expressionListNode.getItems()) {

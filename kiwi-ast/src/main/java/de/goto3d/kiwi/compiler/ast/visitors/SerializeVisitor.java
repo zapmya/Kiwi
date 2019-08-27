@@ -225,6 +225,11 @@ public class SerializeVisitor implements Visitor<CharSequence> {
     }
 
     @Override
+    public CharSequence visit(ContinueStatementNode continueStatementNode) {
+        return "continue;\n";
+    }
+
+    @Override
     public CharSequence visit(ExpressionListNode expressionListNode) {
         List<ExpressionNode> items = expressionListNode.getItems();
         final int numItems          = items.size();

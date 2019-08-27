@@ -5,11 +5,11 @@ import de.goto3d.kiwi.compiler.ast.Visitor;
 
 /**
  * Created by gru.
- * Created on 27.08.2019 - 19:08.
+ * Created on 27.08.2019 - 20:21.
  */
-public class BreakStatementNode extends StatementNode {
+public class ContinueStatementNode extends StatementNode {
 
-    public BreakStatementNode(SourcePosition sourcePosition) {
+    public ContinueStatementNode(SourcePosition sourcePosition) {
         super(sourcePosition);
     }
 

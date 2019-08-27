@@ -10,10 +10,7 @@ import de.goto3d.kiwi.compiler.ast.expressions.ExpressionNode;
 import de.goto3d.kiwi.compiler.ast.expressions.IdentifierNode;
 import de.goto3d.kiwi.compiler.ast.functions.ExternalFunctionNode;
 import de.goto3d.kiwi.compiler.ast.functions.InternalFunctionNode;
-import de.goto3d.kiwi.compiler.ast.statements.BreakStatementNode;
-import de.goto3d.kiwi.compiler.ast.statements.DoWhileStatementNode;
-import de.goto3d.kiwi.compiler.ast.statements.IfStatementNode;
-import de.goto3d.kiwi.compiler.ast.statements.WhileStatementNode;
+import de.goto3d.kiwi.compiler.ast.statements.*;
 import de.goto3d.kiwi.compiler.ast.types.*;
 import de.goto3d.kiwi.compiler.ast.visitors.TraversingVisitor;
 
@@ -219,6 +216,19 @@ public class ValidationVisitor extends TraversingVisitor<AstNode> {
         }
 
         return breakStatementNode;
+    }
+
+    @Override
+    public AstNode visit(ContinueStatementNode continueStatementNode) {
+
+        if ( this.loopCount == 0 ) {
+            this.appendError(
+                    continueStatementNode,
+           "continue statement is outside of any loop."
+            );
+        }
+
+        return continueStatementNode;
     }
 
     private void appendError(AstNode astNode, String message) {

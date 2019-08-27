@@ -93,6 +93,8 @@ public class CodeGeneratorVisitor implements Visitor<LLVMValue> {
 
     private BreakStatementGenerator breakGenerator = new BreakStatementGenerator(this);
 
+    private ContinueStatementGenerator continueGenerator = new ContinueStatementGenerator(this);
+
     private TypeConversionGenerator typeConversionGenerator = new TypeConversionGenerator(this);
 
     private VectorConstructorGenerator vectorConstructorGenerator =
@@ -258,6 +260,11 @@ public class CodeGeneratorVisitor implements Visitor<LLVMValue> {
     @Override
     public LLVMValue visit(BreakStatementNode breakStatementNode) {
         return this.breakGenerator.generateCode(breakStatementNode);
+    }
+
+    @Override
+    public LLVMValue visit(ContinueStatementNode continueStatementNode) {
+        return this.continueGenerator.generateCode(continueStatementNode);
     }
 
     @Override

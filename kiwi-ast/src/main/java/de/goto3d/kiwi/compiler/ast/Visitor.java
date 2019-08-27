@@ -59,6 +59,8 @@ public interface Visitor<T> {
 
     T visit(BreakStatementNode breakStatementNode);
 
+    T visit(ContinueStatementNode continueStatementNode);
+
     T visit(ExpressionListNode expressionListNode);
 
     T visit(ArgumentListNode argumentListNode);
