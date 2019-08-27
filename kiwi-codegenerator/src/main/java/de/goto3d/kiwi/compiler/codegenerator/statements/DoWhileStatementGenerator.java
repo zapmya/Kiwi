@@ -30,6 +30,13 @@ public class DoWhileStatementGenerator extends CodeGeneratorBase<DoWhileStatemen
         // add loop block
         LLVMBasicBlock loopBlock        = new LLVMBasicBlock(function, "loop");
 
+        // construct loop end block already here so we can reference it in later break statements within
+        // the loop block!!!
+        LLVMBasicBlock loopEndBlock     = new LLVMBasicBlock(function, "loopend");
+        // TODO: Müsste hier nicht der conditionBLock als start verwendet werden -> Verhalten von continue innerhalb
+        // TODO: einer do-while-Schleife in Java testen
+        this.visitor.pushLoopEntry(new LoopEntry(loopBlock, loopEndBlock));
+
         // build loop block
         builder.createBranch(loopBlock);
         builder.setInsertPosition(loopBlock);
@@ -41,7 +48,6 @@ public class DoWhileStatementGenerator extends CodeGeneratorBase<DoWhileStatemen
         // fill condition block
         builder.setInsertPosition(conditionBlock);
         LLVMValue relationValue         = doWhileStatementNode.getExpressionNode().accept(this.visitor);
-        LLVMBasicBlock loopEndBlock     = new LLVMBasicBlock(function, "loopend");
         builder.createConditionalBranch(relationValue, loopBlock, loopEndBlock);
 
         // build end block

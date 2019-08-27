@@ -38,6 +38,8 @@ public class WhileStatementGenerator extends CodeGeneratorBase<WhileStatementNod
         LLVMBasicBlock loopEndBlock     = new LLVMBasicBlock(function, "loopend");
         builder.createConditionalBranch(relationValue, loopBlock, loopEndBlock);
 
+        this.visitor.pushLoopEntry(new LoopEntry(conditionBlock, loopEndBlock));
+
         // build loop block
         builder.setInsertPosition(loopBlock);
         whileStatementNode.getBlockNode().accept(this.visitor);

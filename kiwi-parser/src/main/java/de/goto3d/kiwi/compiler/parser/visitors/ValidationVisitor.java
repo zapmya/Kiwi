@@ -10,7 +10,10 @@ import de.goto3d.kiwi.compiler.ast.expressions.ExpressionNode;
 import de.goto3d.kiwi.compiler.ast.expressions.IdentifierNode;
 import de.goto3d.kiwi.compiler.ast.functions.ExternalFunctionNode;
 import de.goto3d.kiwi.compiler.ast.functions.InternalFunctionNode;
+import de.goto3d.kiwi.compiler.ast.statements.BreakStatementNode;
+import de.goto3d.kiwi.compiler.ast.statements.DoWhileStatementNode;
 import de.goto3d.kiwi.compiler.ast.statements.IfStatementNode;
+import de.goto3d.kiwi.compiler.ast.statements.WhileStatementNode;
 import de.goto3d.kiwi.compiler.ast.types.*;
 import de.goto3d.kiwi.compiler.ast.visitors.TraversingVisitor;
 
@@ -18,14 +21,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by da da da gru on 28.05.15.
+ * Created by gru on 28.05.15.
  *
  */
 public class ValidationVisitor extends TraversingVisitor<AstNode> {
 
+    private int loopCount;
+
     private final SymbolTable symbolTable;
 
-    private List<ValidationError> errorList = new ArrayList<ValidationError>();
+    private List<ValidationError> errorList = new ArrayList<>();
 
     public ValidationVisitor(SymbolTable symbolTable) {
         this.symbolTable = symbolTable;
@@ -185,6 +190,35 @@ public class ValidationVisitor extends TraversingVisitor<AstNode> {
         }
 
         return ifStatementNode;
+    }
+
+    @Override
+    public AstNode visit(DoWhileStatementNode doWhileStatementNode) {
+        this.loopCount++;
+        AstNode node    = super.visit(doWhileStatementNode);
+        this.loopCount--;
+        return node;
+    }
+
+    @Override
+    public AstNode visit(WhileStatementNode whileStatementNode) {
+        this.loopCount++;
+        AstNode node    = super.visit(whileStatementNode);
+        this.loopCount--;
+        return node;
+    }
+
+    @Override
+    public AstNode visit(BreakStatementNode breakStatementNode) {
+
+        if ( this.loopCount == 0 ) {
+            this.appendError(
+                    breakStatementNode,
+           "break statement is outside of any loop."
+            );
+        }
+
+        return breakStatementNode;
     }
 
     private void appendError(AstNode astNode, String message) {

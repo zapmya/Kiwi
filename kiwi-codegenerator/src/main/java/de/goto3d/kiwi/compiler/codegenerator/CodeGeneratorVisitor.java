@@ -26,6 +26,8 @@ import de.goto3d.kiwi.compiler.codegenerator.types.TypeConversionGenerator;
 import de.goto3d.kiwi.compiler.codegenerator.types.TypeGenerator;
 import de.goto3d.kiwi.compiler.llvmbindings.*;
 
+import java.util.Stack;
+
 /**
  * Created by IntelliJ IDEA.
  * User: gru
@@ -33,6 +35,8 @@ import de.goto3d.kiwi.compiler.llvmbindings.*;
  * Time: 06:45
  */
 public class CodeGeneratorVisitor implements Visitor<LLVMValue> {
+
+    private final Stack<LoopEntry> loopEntryStack = new Stack<>();
 
     private LLVMModule module;
 
@@ -86,6 +90,8 @@ public class CodeGeneratorVisitor implements Visitor<LLVMValue> {
     private IfElseStatementGenerator ifElseStatementGenerator = new IfElseStatementGenerator(this);
 
     private ReturnStatementGenerator returnGenerator = new ReturnStatementGenerator(this);
+
+    private BreakStatementGenerator breakGenerator = new BreakStatementGenerator(this);
 
     private TypeConversionGenerator typeConversionGenerator = new TypeConversionGenerator(this);
 
@@ -250,6 +256,11 @@ public class CodeGeneratorVisitor implements Visitor<LLVMValue> {
     }
 
     @Override
+    public LLVMValue visit(BreakStatementNode breakStatementNode) {
+        return this.breakGenerator.generateCode(breakStatementNode);
+    }
+
+    @Override
     public LLVMValue visit(ExpressionListNode expressionListNode) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -350,5 +361,17 @@ public class CodeGeneratorVisitor implements Visitor<LLVMValue> {
 
     public LLVMFunction getCurrentFunction() {
         return currentFunction;
+    }
+
+    public void pushLoopEntry(LoopEntry loopEntry) {
+        this.loopEntryStack.push(loopEntry);
+    }
+
+    public LoopEntry popLoopEntry() {
+        return this.loopEntryStack.pop();
+    }
+
+    public LoopEntry peekLoopEntry() {
+        return this.loopEntryStack.peek();
     }
 }
