@@ -7,17 +7,17 @@ Cmake is needed in order to build LLVM (see http://www.llvm.org/docs/CMake.html)
 Build on Linux
 --------------
 
-Download and extract current version from http://www.llvm.org e.g. into $HOME/LLVM. Create 
+Download and extract the current version from http://www.llvm.org e.g. into $HOME/LLVM. Create 
 two folders aside the source folder to hold the build and install files. Your folder
-structure should look something like this
+structure should look something like this:
 
-    llvm-8.0.0-build
-    llvm-8.0.0-install
-    llvm-8.0.0-src
+    llvm-8.0.0.build
+    llvm-8.0.0.install
+    llvm-8.0.0.src
 
-Enter the build folder and type
+Enter the **build folder** and type
 
-    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$HOME/LLVM/llvm-8.0.0-install/ $HOME/LLVM/llvm-8.0.0-src/
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$HOME/LLVM/llvm-8.0.0.install/ $HOME/LLVM/llvm-8.0.0.src/
     make -j8
     make install
 
@@ -27,14 +27,14 @@ Build on Windows(64Bit) using MinGW-w64
 ### Install MinGW-x64
 
 Download the MinGW-w64 installer from this [URL](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download).
-Then start the installer and set it up like this
+Then start the installer and set it up like this:
 
 ![](MinGW-W64-installer.png)
 
 ### Compile LLVM
 
 Download and extract current version from http://www.llvm.org e.g. into %HOME%\LLVM. Create two folders aside the source 
-folder to hold the build and install files. Your folder structure should look something like this
+folder to hold the build and install files. Your folder structure should look something like this:
 
     llvm-8.0.0-build
     llvm-8.0.0-install
@@ -52,7 +52,7 @@ Build on Windows(64Bit) using Visual Studio 2017
 ------------------------------------------------
 
 The compilation itself works but afterwards it was not possible to successfully link the JNI bindings against
-this compilation's lib files. So the use of the MinGW-x64 compiler is highly recommended!
+this compilation's lib files. So the use of the MinGW-x64 compiler is being highly recommended!
 
 Troubleshooting
 ---------------

@@ -8,36 +8,38 @@ class Mandelbrot {
 
     void mandel() {
 
-        float4 xmin     = new float4(-2.5f,-2.5f,-2.5f,-2.5f);
-        float4 ymin     = new float4(-1.5f,-1.5f,-1.5f,-1.5f);
+        // TODO: simplify this -> use one value only!!!
+        double4 xmin     = new double4(-2.5,-2.5,-2.5,-2.5);
+        double4 ymin     = new double4(-1.5,-1.5,-1.5,-1.5);
 
-        float4 xscale   = new float4((1.5f+2.5f) / 60,(1.5f+2.5f) / 60,(1.5f+2.5f) / 60,(1.5f+2.5f) / 60);
-        float4 yscale   = new float4((1.5f+1.5f) / 25,(1.5f+1.5f) / 25,(1.5f+1.5f) / 25,(1.5f+1.5f) / 25);
+        // TODO: allow underscores in identifiers
+        double4 xscale   = new double4((1.5+2.5) / 16000,(1.5+2.5) / 16000,(1.5+2.5) / 16000,(1.5+2.5) / 16000);
+        double4 yscale   = new double4((1.5+1.5) / 16000,(1.5+1.5) / 16000,(1.5+1.5) / 16000,(1.5+1.5) / 16000);
 
-        float4 threshold    = new float4(4,4,4,4);
+        double4 threshold    = new double4(4,4,4,4);
         int4 indexes        = new int4(0,1,2,3);
         int y = 0;
-        while ( y < 25 ) {
+        while ( y < 16000 ) {
             int x = 0;
-            while ( x < 60 ) {
+            while ( x < 16000 ) {
                 int4 mx     = new int4(x,x,x,x);
                 mx          = mx + indexes;
 
                 int4 my     = new int4(y,y,y,y);
 
-                float4 cr   = mx*xscale + xmin;
-                float4 ci   = my*yscale + ymin;
-                float4 zr   = cr;
-                float4 zi   = ci;
+                double4 cr   = mx*xscale + xmin;
+                double4 ci   = my*yscale + ymin;
+                double4 zr   = cr;
+                double4 zi   = ci;
 
                 int k       = 1;
                 int4 mk     = new int4(1,1,1,1);
-                while ( k < 90 ) {
+                while ( k < 50 ) {
                     k   = k+1;
                     /* Compute z1 from z0 */
-                    float4 zr2  = zr*zr;
-                    float4 zi2  = zi*zi;
-                    float4 zrzi = zr*zi;
+                    double4 zr2  = zr*zr;
+                    double4 zi2  = zi*zi;
+                    double4 zrzi = zr*zi;
                     /* zr1 = zr0 * zr0 - zi0 * zi0 + cr */
                     /* zi1 = zr0 * zi0 + zr0 * zi0 + ci */
                     zr  = zr2 - zi2 + cr;
@@ -46,11 +48,12 @@ class Mandelbrot {
                     // Increment k
                     zr2 = zr*zr;
                     zi2 = zi*zi;
-                    float4 mag2 = zr2 + zi2;
+                    double4 mag2 = zr2 + zi2;
                     int4 mask   = mag2 < threshold;
                     mk          = mk + mask;
 
                     // TODO: simplify this -> do one compare only
+                    // TODO: check out of bounds at compile time
                     if ( mask[0] == 0 ) {
                         if ( mask[1] == 0 ) {
                             if ( mask[2] == 0 ) {
@@ -62,10 +65,10 @@ class Mandelbrot {
                     }
                 }
 
-                print(33+mk[0]);
-                print(33+mk[1]);
-                print(33+mk[2]);
-                print(33+mk[3]);
+                if ( mk[0] == 0 ) {print(65);} else {print(66);}
+//                if ( mk[1] == 0 ) {print(65);} else {print(66);}
+//                if ( mk[2] == 0 ) {print(65);} else {print(66);}
+//                if ( mk[3] == 0 ) {print(65);} else {print(66);}
 
                 x = x + 4;
             }

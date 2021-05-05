@@ -73,7 +73,7 @@
                             <tasks>
                                 <echo>Generating wrapper for OS Family: ${os.platform}</echo>
                                 <property environment="env"/>
-                                <fail unless="env.JAVA_HOME" message="JAVA_HOME is not set."/>
+                                <fail unless="env.JAVA_HOME" message="Env variable JAVA_HOME is not set."/>
                                 <echo>JAVA_HOME=${env.JAVA_HOME}</echo>
                                 <property file="${basedir}/ant/${os.platform}.properties"/>
                                 <property name="maven.basedir" value="${basedir}"/>
@@ -104,6 +104,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <phase>generate-sources</phase>
